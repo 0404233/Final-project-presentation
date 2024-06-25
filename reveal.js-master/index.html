@@ -35,8 +35,7 @@
                 <h3>Teammate</h3>
                 <img src="./assets/our-photos/Eugeniy.jpg" alt="" />
                 <p>
-                  Евгений, г. Ярославль. Безумная любовь к воплощению бизнес
-                  логики приложения с тех задания в код.
+                  Евгений, г. Ярославль. Увлечён созданием внутренней логики приложения.
                 </p>
               </div>
               <div class="team-member fragment fade-up">
@@ -149,7 +148,7 @@
         </section>
 
         <section>
-          <p class="pr typing">Пример PR:</p>
+          <h4 class="pr typing">Пример PR:</h4>
           <section>
             <img class="fragment fade-up" src="./assets/imgs/img2.png" alt="" />
           </section>
@@ -186,6 +185,15 @@
             </h4>
           </section>
         </section>
+
+        <section>
+          <h2 class="typing">Заключение</h2>
+          <section>
+            <h4 class="fragment fade-up">
+              Вовлечённость и взаимодействие = успех.
+            </h4>
+          </section>
+        </section>
       </div>
     </div>
 
@@ -206,34 +214,39 @@
     </script>
 
     <script>
-const titles = document.querySelectorAll(".typing");
+      const controls = document.querySelector('.controls');
+      let currentPage = document.querySelector('.reveal section.present');
+      function recall() {
+        let newCurrentPage = document.querySelector('.reveal section.present');
+        if (currentPage === newCurrentPage) {
+          return;
+        } else {
+          currentPage = newCurrentPage;
+          typeWriter(currentPage.querySelector('.typing'));
+        }
+      }
+      controls.addEventListener('click', recall);
+      document.addEventListener('keydown', (event) => {
+        if (event.keyCode === 38 || event.keyCode === 40 || event.keyCode === 37 || event.keyCode === 39) {
+          recall()
+        }
+      });
 
-function recall() {
-  titles.forEach((title) => {
-    typeWriter(title);
-  });
-}
+      function typeWriter(title) {
+        const currentInner = title.textContent;
+        title.innerHTML = '';
+        console.log(currentInner.length);
 
-const controls = document.querySelector(".controls");
+        let titleLength = currentInner.length; // длина заголовка текущей страницы
 
-// Use recall without parentheses to pass the function reference
-controls.addEventListener("click", recall);
-
-function typeWriter(title) {
-  const currentInner = title.innerHTML;
-  title.innerHTML = "";
-  console.log(currentInner.length);
-
-  for (let i = 0; i < currentInner.length; i++) {
-    // Use a closure inside setTimeout to create a typing effect
-    (function(i) {
-      setTimeout(function() {
-        title.innerHTML += currentInner.charAt(i);
-      }, 50 * i);
-    })(i);
-  }
-}
-
+        for (let i = 0; i < titleLength; i++) {
+          (function (i) {
+            setTimeout(function () {
+              title.innerHTML += currentInner.charAt(i);
+            }, 50 * i);
+          })(i);
+        }
+      }
     </script>
     <style>
       .team-member img {
